@@ -1,1 +1,16 @@
-<p>slot-machine works!</p>
+<div class="slot-machine">
+  <div class="slot-machine__reels">
+    <div class="slot-machine__reel" *ngFor="let reel of reels">
+      <div class="slot-machine__symbol" *ngFor="let symbol of reel">
+        {{ symbol }}
+      </div>
+    </div>
+  </div>
+  <button
+    pButton
+    label="Спин!"
+    icon="pi pi-spin"
+    class="slot-machine__spin-button"
+    (click)="spin()"
+  ></button>
+</div>

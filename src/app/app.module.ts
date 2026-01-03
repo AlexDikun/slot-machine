@@ -1,22 +1,23 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppComponent } from './app.component';
-import { SlotMachineComponent } from './main/slot-machine/slot-machine.component';
 import { HeaderComponent } from './header/header.component';
-import { FooterComponent } from './footer/footer.component';
 import { MainComponent } from './main/main.component';
+import { SlotMachineComponent } from './main/slot-machine/slot-machine.component';
+import { FooterComponent } from './footer/footer.component';
+import { ButtonModule } from 'primeng/button';
 
 @NgModule({
   declarations: [
     AppComponent,
-    SlotMachineComponent,
     HeaderComponent,
+    MainComponent,
+    SlotMachineComponent,
     FooterComponent,
-    MainComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    ButtonModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
