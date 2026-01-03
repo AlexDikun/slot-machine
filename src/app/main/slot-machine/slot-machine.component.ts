@@ -7,16 +7,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./slot-machine.component.scss']
 })
 export class SlotMachineComponent {
-  symbols = ['🍒', '🍋', '🔥', '💎', '7', '🍀'];
-  reels = [
-    ['🍒', '🍋', '🔥'],
-    ['💎', '7', '🍀'],
-    ['🍒', '🍋', '🔥']
-  ];
-
   spin() {
-    this.reels = this.reels.map(reel =>
-      reel.map(() => this.symbols[Math.floor(Math.random() * this.symbols.length)])
-    );
+    console.log("Спин!");
   }
 }
