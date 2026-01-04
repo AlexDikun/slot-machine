@@ -33,17 +33,16 @@ export class SlotMachineComponent {
   ];
 
   spin() {
-    // Перемешиваем символы
-    this.reels = this.reels.map(reel =>
-      reel.map(() => this.symbols[Math.floor(Math.random() * this.symbols.length)])
-    );
     // Добавляем класс для анимации
-    const reels = document.querySelectorAll('.slot-machine__reel');
-    reels.forEach(reel => {
-      reel.classList.add('slot-machine__reel--spinning');
-      setTimeout(() => {
-        reel.classList.remove('slot-machine__reel--spinning');
-      }, 500);
-    });
+    const rows = document.querySelectorAll('.slot-machine__row');
+    rows.forEach(row => row.classList.add('slot-machine__row--spinning'));
+
+    // Через 500 мс обновляем символы и убираем анимацию
+    setTimeout(() => {
+      this.reels = this.reels.map(reel =>
+        reel.map(() => this.symbols[Math.floor(Math.random() * this.symbols.length)])
+      );
+      rows.forEach(row => row.classList.remove('slot-machine__row--spinning'));
+    }, 500);
   }
 }
