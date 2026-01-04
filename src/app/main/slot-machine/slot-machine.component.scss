@@ -15,6 +15,7 @@
     border-radius: 8px;
     padding: 1rem;
     min-width: 80px;
+    animation: spin 0.5s ease-in-out; /* Анимация вращения */
   }
 
   &__symbol {
@@ -29,6 +30,17 @@
     padding: 0.5rem 1.5rem;
     border-radius: 4px;
     cursor: pointer;
+    transition: background 0.3s; /* Плавное изменение цвета */
   }
+}
+
+/* Анимация вращения */
+@keyframes spin {
+  0% { transform: rotateX(0deg); }
+  100% { transform: rotateX(360deg); }
+}
+
+.slot-machine__reel--spinning {
+  animation: spin 0.5s ease-in-out;
 }
 

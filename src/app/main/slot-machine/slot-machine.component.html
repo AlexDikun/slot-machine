@@ -1,13 +1,11 @@
 <div class="slot-machine">
-  <!-- Упрощённые барабаны -->
   <div class="slot-machine__reels">
-    <div class="slot-machine__reel">
-      <div class="slot-machine__symbol">🍒</div>
-      <div class="slot-machine__symbol">🍋</div>
-      <div class="slot-machine__symbol">🔥</div>
+    <div class="slot-machine__reel" *ngFor="let reel of reels">
+      <div class="slot-machine__symbol" *ngFor="let symbol of reel">
+        {{ symbol }}
+      </div>
     </div>
   </div>
-  <!-- Кнопка без PrimeNG (просто HTML) -->
-  <button class="slot-machine__spin-button">Спин!</button>
+  <button class="slot-machine__spin-button" (click)="spin()">Спин!</button>
 </div>
 
