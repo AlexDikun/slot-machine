@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+import { gsap } from 'gsap';
 
 interface Symbol {
   id: string;
@@ -12,7 +13,9 @@ interface Symbol {
   templateUrl: './slot-machine.component.html',
   styleUrls: ['./slot-machine.component.scss']
 })
-export class SlotMachineComponent {
+export class SlotMachineComponent implements AfterViewInit {
+  @ViewChild('reelsContainer') reelsContainer!: ElementRef;
+
   symbols: Symbol[] = [
     { id: 'six', name: 'Crow', icon: 'assets/symbols/six-icon.jpg'},
     { id: 'seven', name: 'Basileus', icon: 'assets/symbols/seven-icon.jpg'},
@@ -32,17 +35,24 @@ export class SlotMachineComponent {
     Array(5).fill(null).map(() => this.symbols[Math.floor(Math.random() * this.symbols.length)]),
   ];
 
-  spin() {
-    // Добавляем класс для анимации
-    const rows = document.querySelectorAll('.slot-machine__row');
-    rows.forEach(row => row.classList.add('slot-machine__row--spinning'));
+  ngAfterViewInit() {}
 
-    // Через 500 мс обновляем символы и убираем анимацию
-    setTimeout(() => {
-      this.reels = this.reels.map(reel =>
-        reel.map(() => this.symbols[Math.floor(Math.random() * this.symbols.length)])
-      );
-      rows.forEach(row => row.classList.remove('slot-machine__row--spinning'));
-    }, 500);
+  spin() {
+    // Логика прокрутки с GSAP
+    const reels = this.reelsContainer.nativeElement.querySelectorAll('.slot-machine__row');
+    reels.forEach((reel: HTMLElement, index: number) => {
+      gsap.to(reel, {
+        y: -1000, // Прокрутка вверх
+        duration: 2 + index * 0.5, // Разная длительность для каждого барабана
+        ease: "power2.inOut",
+        onComplete: () => {
+          // Обновляем символы после анимации
+          this.reels = this.reels.map(reel =>
+            reel.map(() => this.symbols[Math.floor(Math.random() * this.symbols.length)])
+          );
+          gsap.set(reel, { y: 0 }); // Сбрасываем позицию
+        }
+      });
+    });
   }
 }

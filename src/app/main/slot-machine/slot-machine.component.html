@@ -1,4 +1,4 @@
-<div class="slot-machine__reels">
+<div class="slot-machine__reels" #reelsContainer>
   <div class="slot-machine__row" *ngFor="let row of reels">
     <div class="slot-machine__symbol" *ngFor="let symbol of row">
       <img [src]="symbol.icon" [alt]="symbol.name" class="slot-machine__icon">

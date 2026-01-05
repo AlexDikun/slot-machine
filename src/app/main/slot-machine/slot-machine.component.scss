@@ -42,16 +42,6 @@
   }
 }
 
-/* Анимация вращения */
-@keyframes spin {
-  0% { transform: rotateX(0deg); }
-  100% { transform: rotateX(360deg); }
-}
-
-.slot-machine__reel--spinning {
-  animation: spin 0.5s ease-in-out;
-}
-
 .slot-machine__spin-button {
   display: flex;
   align-items: center;
@@ -77,20 +67,24 @@
   flex-direction: column;
   gap: 0.5rem;
   overflow: hidden;
+  height: 200px; // Фиксированная высота для видимой области
 }
 
 .slot-machine__row {
   display: flex;
   gap: 0.5rem;
-  transition: transform 0.5s ease-in-out;
+  will-change: transform; // Оптимизация для анимации
 }
 
-.slot-machine__row--spinning {
-  animation: spin 0.5s linear;
+.slot-machine__symbol {
+  width: 60px;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
 
-@keyframes spin {
-  0% { transform: translateY(0); }
-  100% { transform: translateY(-100%); }
-}
 
