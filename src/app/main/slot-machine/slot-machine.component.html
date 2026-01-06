@@ -1,10 +1,16 @@
-<div class="slot-machine__reels" #reelsContainer>
-  <div class="slot-machine__row" *ngFor="let row of reels">
-    <div class="slot-machine__symbol" *ngFor="let symbol of row">
-      <img [src]="symbol.icon" [alt]="symbol.name" class="slot-machine__icon">
+<!-- slot-machine.component.html -->
+<div class="slot-machine">
+  <div class="slot-machine__reels" #reelsContainer>
+    <div class="slot-machine__reel" *ngFor="let reel of reels">
+      <div class="slot-machine__reel-inner">
+        <div class="slot-machine__symbol" *ngFor="let symbol of reel">
+          <img [src]="symbol.icon" class="slot-machine__icon" />
+        </div>
+      </div>
     </div>
   </div>
+
+  <button class="slot-machine__spin-button" (click)="spinAllReels()" [disabled]="isSpinning">
+    <img src="assets/symbols/spin-button-icon.jpg" alt="Spin" class="slot-machine__spin-icon"/>
+  </button>
 </div>
-<button class="slot-machine__spin-button" (click)="spinAllReels()">
-  <img src="assets/spin-button-icon.jpg" alt="Spin" class="slot-machine__spin-icon">
-</button>
