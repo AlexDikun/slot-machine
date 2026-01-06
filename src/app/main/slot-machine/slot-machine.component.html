@@ -1,5 +1,13 @@
-<!-- slot-machine.component.html -->
 <div class="slot-machine">
+  <!-- ot-machine.component.html -->
+
+  <!-- JACKPOT -->
+  <div class="slot-machine__jackpot">
+    <div class="jackpot-label">JACKPOT</div>
+    <div class="jackpot-value">1 250 000</div>
+  </div>
+
+  <!-- REELS -->
   <div class="slot-machine__reels" #reelsContainer>
     <div class="slot-machine__reel" *ngFor="let reel of reels">
       <div class="slot-machine__reel-inner">
@@ -10,7 +18,46 @@
     </div>
   </div>
 
-  <button class="slot-machine__spin-button" (click)="spinAllReels()" [disabled]="isSpinning">
-    <img src="assets/symbols/spin-button-icon.jpg" alt="Spin" class="slot-machine__spin-icon"/>
-  </button>
+  <!-- BOTTOM PANEL -->
+  <div class="slot-machine__bottom-panel">
+
+    <!-- BET -->
+    <div class="slot-machine__bet">
+      <div class="bet-label">Ставка</div>
+
+      <div
+        class="bet-current"
+        (click)="onBetHover(!showBetOptions)"
+        [class.disabled]="isSpinning"
+      >
+        {{ currentBet }}
+      </div>
+
+      <div class="bet-options" *ngIf="showBetOptions">
+        <div
+          class="bet-option"
+          *ngFor="let bet of bets"
+          (click)="selectBet(bet)"
+          [class.active]="bet === currentBet"
+        >
+          {{ bet }}
+        </div>
+      </div>
+    </div>
+
+    <!-- SPIN -->
+    <button
+      class="slot-machine__spin-button"
+      (click)="spinAllReels()"
+      [disabled]="isSpinning"
+    >
+      <img
+        src="assets/symbols/spin-button-icon.jpg"
+        alt="Spin"
+        class="slot-machine__spin-icon"
+      />
+    </button>
+
+  </div>
+
 </div>

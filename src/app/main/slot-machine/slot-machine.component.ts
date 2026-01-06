@@ -1,5 +1,9 @@
-// slot-machine.component.ts
-import { Component, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  ViewChild,
+  AfterViewInit
+} from '@angular/core';
 import { gsap } from 'gsap';
 
 interface SymbolItem {
@@ -25,6 +29,12 @@ export class SlotMachineComponent implements AfterViewInit {
 
   isSpinning = false;
 
+  // ===== BET SELECTOR =====
+  bets: number[] = [50, 100, 200, 300];
+  currentBet = 50;
+  showBetOptions = false;
+
+  // ===== SYMBOLS =====
   symbols: SymbolItem[] = [
     { id: 'six', name: 'Crow', icon: 'assets/symbols/six-icon.jpg' },
     { id: 'seven', name: 'Basileus', icon: 'assets/symbols/seven-icon.jpg' },
@@ -46,9 +56,10 @@ export class SlotMachineComponent implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    const reelElements = this.reelsContainer.nativeElement.querySelectorAll<HTMLElement>(
-      '.slot-machine__reel-inner'
-    );
+    const reelElements =
+      this.reelsContainer.nativeElement.querySelectorAll<HTMLElement>(
+        '.slot-machine__reel-inner'
+      );
 
     reelElements.forEach(reel => {
       gsap.set(reel, { y: 0 });
@@ -56,7 +67,7 @@ export class SlotMachineComponent implements AfterViewInit {
   }
 
   private initReels(): void {
-    const reelLength = this.symbols.length * 20; // запас для прокрутки
+    const reelLength = this.symbols.length * 20;
     this.reels = Array.from({ length: this.REELS_COUNT }, () =>
       Array.from({ length: reelLength }, () => this.getRandomSymbol())
     );
@@ -66,15 +77,17 @@ export class SlotMachineComponent implements AfterViewInit {
     if (this.isSpinning) return;
 
     this.isSpinning = true;
-    const reelElements = this.reelsContainer.nativeElement.querySelectorAll<HTMLElement>(
-      '.slot-machine__reel-inner'
-    );
 
-    let finishedReels = 0;
+    const reelElements =
+      this.reelsContainer.nativeElement.querySelectorAll<HTMLElement>(
+        '.slot-machine__reel-inner'
+      );
+
+    let finished = 0;
 
     reelElements.forEach((reelEl, index) => {
       const stopIndex = this.getRandomStopIndex(this.reels[index]);
-      const extraSpins = Math.floor(Math.random() * 10) * this.VISIBLE_SYMBOLS; // тоже кратно 3
+      const extraSpins = Math.floor(Math.random() * 10) * this.VISIBLE_SYMBOLS;
       const finalIndex = stopIndex + extraSpins;
       const finalY = -finalIndex * this.SYMBOL_HEIGHT;
 
@@ -83,30 +96,44 @@ export class SlotMachineComponent implements AfterViewInit {
         duration: 2.5 + index * 0.3,
         ease: 'power2.out',
         onComplete: () => {
-          // выравниваем по сетке
           gsap.set(reelEl, { y: -stopIndex * this.SYMBOL_HEIGHT });
 
-          // пересобираем ленту для будущего бэка
           this.reels[index] = [
             ...this.reels[index].slice(stopIndex, stopIndex + this.VISIBLE_SYMBOLS),
-            ...this.reels[index].filter((_, i) => i < stopIndex || i >= stopIndex + this.VISIBLE_SYMBOLS)
+            ...this.reels[index].filter(
+              (_, i) => i < stopIndex || i >= stopIndex + this.VISIBLE_SYMBOLS
+            ),
           ];
 
-          finishedReels++;
-          if (finishedReels === reelElements.length) this.isSpinning = false;
-        }
+          finished++;
+          if (finished === reelElements.length) {
+            this.isSpinning = false;
+          }
+        },
       });
     });
   }
 
   private getRandomStopIndex(reel: SymbolItem[]): number {
-    const step = this.VISIBLE_SYMBOLS; // 3
+    const step = this.VISIBLE_SYMBOLS;
     const maxIndex = reel.length - step;
     const maxStepIndex = Math.floor(maxIndex / step);
     return Math.floor(Math.random() * maxStepIndex) * step;
-}
+  }
 
   private getRandomSymbol(): SymbolItem {
     return this.symbols[Math.floor(Math.random() * this.symbols.length)];
+  }
+
+  // ===== BET UI =====
+  onBetHover(state: boolean) {
+    if (this.isSpinning) return;
+    this.showBetOptions = state;
+  }
+
+  selectBet(bet: number) {
+    if (this.isSpinning) return;
+    this.currentBet = bet;
+    this.showBetOptions = false;
   }
 }

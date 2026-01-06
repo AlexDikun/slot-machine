@@ -1,11 +1,35 @@
-/* slot-machine.component.scss */
 .slot-machine {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1.5rem;
+  gap: 12px;
 }
 
+/* JACKPOT */
+.slot-machine__jackpot {
+  text-align: center;
+  margin-bottom: 6px;
+
+  .jackpot-label {
+    font-size: 12px;
+    opacity: 0.7;
+  }
+
+  .jackpot-value {
+    font-size: 20px;
+    font-weight: bold;
+    color: gold;
+  }
+}
+
+/* GAME AREA */
+.slot-machine__game-area {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+/* REELS */
 .slot-machine__reels {
   display: flex;
   gap: 0.5rem;
@@ -35,7 +59,6 @@
   align-items: center;
   background: white;
   border-bottom: 1px solid #eee;
-  overflow: hidden;
 }
 
 .slot-machine__icon {
@@ -44,17 +67,19 @@
   object-fit: contain;
 }
 
+/* SPIN BUTTON */
 .slot-machine__spin-button {
+  margin-top: 24px;
   background: transparent;
   border: none;
-  padding: 0;
   cursor: pointer;
   width: 64px;
   height: 64px;
+
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 30px;
+
   transition: transform 0.15s ease, filter 0.15s ease;
 
   &:hover {
@@ -77,4 +102,66 @@
   height: 100%;
   object-fit: contain;
   pointer-events: none;
+}
+
+/* BET SELECTOR (now at bottom) */
+.slot-machine__bottom-panel {
+  width: 100%;
+  max-width: 420px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+/* BET */
+.slot-machine__bet {
+  position: relative;
+  text-align: center;
+  font-size: 12px;
+}
+
+.bet-label {
+  margin-bottom: 4px;
+  opacity: 0.7;
+}
+
+.bet-current {
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+
+  &.disabled {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+}
+
+.bet-options {
+  position: absolute;
+  top: -50px;
+  left: 0;
+  display: flex;
+  gap: 8px;
+
+  padding: 6px 10px;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.bet-option {
+  cursor: pointer;
+  padding: 4px 6px;
+  border-radius: 4px;
+
+  &:hover {
+    background: #eee;
+  }
+
+  &.active {
+    background: #ddd;
+    font-weight: bold;
+  }
 }
