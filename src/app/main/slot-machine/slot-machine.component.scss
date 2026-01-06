@@ -66,14 +66,17 @@
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  overflow: hidden;
-  height: 200px; // Фиксированная высота для видимой области
+  overflow: hidden; /* Обязательно для обрезки «улетающих» элементов */
+  height: 200px; /* Фиксированная высота — основа для расчёта анимации */
 }
 
 .slot-machine__row {
+  width: 100%;
+  height: 60px; /* Высота одного символа + отступы */
   display: flex;
   gap: 0.5rem;
-  will-change: transform; // Оптимизация для анимации
+  overflow: hidden; /* Обрезка символов за пределами ряда */
+  position: relative; /* Важно для корректной работы translateY() */
 }
 
 .slot-machine__symbol {
