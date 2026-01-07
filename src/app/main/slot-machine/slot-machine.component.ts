@@ -1,9 +1,4 @@
-import {
-  Component,
-  ElementRef,
-  ViewChild,
-  AfterViewInit
-} from '@angular/core';
+import { Component, ElementRef, ViewChild, AfterViewInit, HostListener } from '@angular/core';
 import { gsap } from 'gsap';
 
 interface SymbolItem {
@@ -51,15 +46,18 @@ export class SlotMachineComponent implements AfterViewInit {
 
   reels: SymbolItem[][] = [];
 
-  constructor() {
+  // ===== PROGRESS WILD SYMBOLS =====
+  goldWildProgress = 0;
+  silverWildProgress = 0;
+
+  constructor(private elRef: ElementRef) {
     this.initReels();
   }
 
   ngAfterViewInit(): void {
-    const reelElements =
-      this.reelsContainer.nativeElement.querySelectorAll<HTMLElement>(
-        '.slot-machine__reel-inner'
-      );
+    const reelElements = this.reelsContainer.nativeElement.querySelectorAll<HTMLElement>(
+      '.slot-machine__reel-inner'
+    );
 
     reelElements.forEach(reel => {
       gsap.set(reel, { y: 0 });
@@ -78,10 +76,9 @@ export class SlotMachineComponent implements AfterViewInit {
 
     this.isSpinning = true;
 
-    const reelElements =
-      this.reelsContainer.nativeElement.querySelectorAll<HTMLElement>(
-        '.slot-machine__reel-inner'
-      );
+    const reelElements = this.reelsContainer.nativeElement.querySelectorAll<HTMLElement>(
+      '.slot-machine__reel-inner'
+    );
 
     let finished = 0;
 
@@ -104,6 +101,11 @@ export class SlotMachineComponent implements AfterViewInit {
               (_, i) => i < stopIndex || i >= stopIndex + this.VISIBLE_SYMBOLS
             ),
           ];
+
+          // Обновление прогресса диких карт
+          for (let i = stopIndex; i < stopIndex + this.VISIBLE_SYMBOLS; i++) {
+            this.updateWildProgress(this.reels[index][i].id);
+          }
 
           finished++;
           if (finished === reelElements.length) {
@@ -135,5 +137,24 @@ export class SlotMachineComponent implements AfterViewInit {
     if (this.isSpinning) return;
     this.currentBet = bet;
     this.showBetOptions = false;
+  }
+
+  // ===== отслеживаем клики вне селектора =====
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent) {
+    const clickedInside = this.elRef.nativeElement.contains(event.target);
+    if (!clickedInside) {
+      this.showBetOptions = false;
+    }
+  }
+
+  // ===== WILD PROGRESS =====
+  updateWildProgress(symbolId: string) {
+    if (symbolId === 'wild1') {
+      this.goldWildProgress = Math.min(this.goldWildProgress + 20, 100);
+    }
+    if (symbolId === 'wild2') {
+      this.silverWildProgress = Math.min(this.silverWildProgress + 20, 100);
+    }
   }
 }

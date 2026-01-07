@@ -1,63 +1,64 @@
+  <!-- slot-machine.component.html -->
 <div class="slot-machine">
-  <!-- ot-machine.component.html -->
 
-  <!-- JACKPOT -->
+  <!-- Джекпот -->
   <div class="slot-machine__jackpot">
     <div class="jackpot-label">JACKPOT</div>
     <div class="jackpot-value">1 250 000</div>
   </div>
 
-  <!-- REELS -->
-  <div class="slot-machine__reels" #reelsContainer>
-    <div class="slot-machine__reel" *ngFor="let reel of reels">
-      <div class="slot-machine__reel-inner">
-        <div class="slot-machine__symbol" *ngFor="let symbol of reel">
-          <img [src]="symbol.icon" class="slot-machine__icon" />
+  <!-- ИГРОВАЯ ЗОНА С ПОДКОВАМИ -->
+  <div class="slot-machine__game-area-with-wilds">
+    <!-- Левая подкова -->
+    <div class="wild-progress__item wild-progress__gold">
+      <img src="assets/symbols/wildGoldenHorseshoe-icon.jpg" [class.active]="goldWildProgress > 0" />
+      <div class="wild-progress__bar">
+        <div class="wild-progress__bar-fill" [style.width.%]="goldWildProgress"></div>
+      </div>
+    </div>
+
+    <!-- БАРАБАНЫ -->
+    <div class="slot-machine__game-area">
+      <div class="slot-machine__reels" #reelsContainer>
+        <div class="slot-machine__reel" *ngFor="let reel of reels">
+          <div class="slot-machine__reel-inner">
+            <div class="slot-machine__symbol" *ngFor="let symbol of reel">
+              <img [src]="symbol.icon" class="slot-machine__icon" />
+            </div>
+          </div>
         </div>
+      </div>
+    </div>
+
+    <!-- Правая подкова -->
+    <div class="wild-progress__item wild-progress__silver">
+      <img src="assets/symbols/wildSilverHorseshoe-icon.jpg" [class.active]="silverWildProgress > 0" />
+      <div class="wild-progress__bar">
+        <div class="wild-progress__bar-fill" [style.width.%]="silverWildProgress"></div>
       </div>
     </div>
   </div>
 
-  <!-- BOTTOM PANEL -->
+  <!-- НИЖНЯЯ ПАНЕЛЬ -->
   <div class="slot-machine__bottom-panel">
-
     <!-- BET -->
     <div class="slot-machine__bet">
       <div class="bet-label">Ставка</div>
-
-      <div
-        class="bet-current"
-        (click)="onBetHover(!showBetOptions)"
-        [class.disabled]="isSpinning"
-      >
+      <div class="bet-current" (click)="onBetHover(!showBetOptions)" [class.disabled]="isSpinning">
         {{ currentBet }}
       </div>
-
       <div class="bet-options" *ngIf="showBetOptions">
-        <div
-          class="bet-option"
-          *ngFor="let bet of bets"
-          (click)="selectBet(bet)"
-          [class.active]="bet === currentBet"
-        >
+        <div class="bet-option" *ngFor="let bet of bets" (click)="selectBet(bet)" [class.active]="bet === currentBet">
           {{ bet }}
         </div>
       </div>
     </div>
 
-    <!-- SPIN -->
-    <button
-      class="slot-machine__spin-button"
-      (click)="spinAllReels()"
-      [disabled]="isSpinning"
-    >
-      <img
-        src="assets/symbols/spin-button-icon.jpg"
-        alt="Spin"
-        class="slot-machine__spin-icon"
-      />
+    <!-- SPIN BUTTON -->
+    <button class="slot-machine__spin-button" (click)="spinAllReels()" [disabled]="isSpinning">
+      <img src="assets/symbols/spin-button-icon.jpg" alt="Spin" class="slot-machine__spin-icon" />
     </button>
-
   </div>
 
 </div>
+
