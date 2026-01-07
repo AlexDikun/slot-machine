@@ -67,7 +67,7 @@ export class SlotMachineComponent implements AfterViewInit {
   }
 
   private initReels(): void {
-    const reelLength = this.symbols.length * 20;
+    const reelLength = this.symbols.length * 40;
     this.reels = Array.from({ length: this.REELS_COUNT }, () =>
       Array.from({ length: reelLength }, () => this.getRandomSymbol())
     );
