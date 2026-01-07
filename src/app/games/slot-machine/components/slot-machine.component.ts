@@ -1,4 +1,5 @@
 import { Component, ElementRef, ViewChild, AfterViewInit, HostListener } from '@angular/core';
+import { SYMBOLS_CONFIG, SymbolConfig } from '../config/symbols.config';
 import { gsap } from 'gsap';
 
 interface SymbolItem {
@@ -30,19 +31,7 @@ export class SlotMachineComponent implements AfterViewInit {
   showBetOptions = false;
 
   // ===== SYMBOLS =====
-  symbols: SymbolItem[] = [
-    { id: 'six', name: 'Crow', icon: 'assets/symbols/six-icon.jpg' },
-    { id: 'seven', name: 'Basileus', icon: 'assets/symbols/seven-icon.jpg' },
-    { id: 'eight', name: 'Solovey', icon: 'assets/symbols/eight-icon.jpg' },
-    { id: 'nine', name: 'Felicita', icon: 'assets/symbols/nine-icon.jpg' },
-    { id: 'ten', name: 'Tugarin', icon: 'assets/symbols/ten-icon.jpg' },
-    { id: 'jack', name: 'Kalyvan', icon: 'assets/symbols/jack-icon.jpg' },
-    { id: 'lady', name: 'BabaYaga', icon: 'assets/symbols/lady-icon.jpg' },
-    { id: 'king', name: 'Koschei', icon: 'assets/symbols/king-icon.jpg' },
-    { id: 'ace', name: 'Gorynych', icon: 'assets/symbols/ace-icon.jpg' },
-    { id: 'wild1', name: 'Gold', icon: 'assets/symbols/wildGoldenHorseshoe-icon.jpg' },
-    { id: 'wild2', name: 'Silver', icon: 'assets/symbols/wildSilverHorseshoe-icon.jpg' },
-  ];
+  symbols: SymbolConfig[] = SYMBOLS_CONFIG; 
 
   reels: SymbolItem[][] = [];
 
