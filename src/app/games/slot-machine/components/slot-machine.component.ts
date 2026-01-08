@@ -58,62 +58,62 @@ export class SlotMachineComponent implements AfterViewInit {
     );
   }
 
-  spinAllReels(): void {
-  if (this.isSpinning) return;
+  startSpin(): void {
+    if (this.isSpinning) return;
 
-  this.isSpinning = true;
+    this.isSpinning = true;
 
-  const reelElements =
-    this.reelsContainer.nativeElement.querySelectorAll<HTMLElement>(
-      '.slot-machine__reel-inner'
-    );
+    const reelElements =
+      this.reelsContainer.nativeElement.querySelectorAll<HTMLElement>(
+        '.slot-machine__reel-inner'
+      );
 
-  // ФИНАЛ СПИНА (5 × 3)
-  const spinResultIds = this.slotLogic.generateReels();
+    // ФИНАЛ СПИНА (5 × 3)
+    const spinResultIds = this.slotLogic.generateReels();
 
-  let finished = 0;
+    let finished = 0;
 
-  reelElements.forEach((reelEl, index) => {
-    // 👇 ключевая интеграция
-    const stopIndex = this.prepareReelStop(
-      index,
-      spinResultIds[index]
-    );
+    reelElements.forEach((reelEl, index) => {
+      // 👇 ключевая интеграция
+      const stopIndex = this.prepareReelStop(
+        index,
+        spinResultIds[index]
+      );
 
-    const extraSpins = Math.floor(Math.random() * 10) * this.VISIBLE_SYMBOLS;
-    const finalIndex = stopIndex + extraSpins;
-    const finalY = -finalIndex * this.SYMBOL_HEIGHT;
+      const extraSpins = Math.floor(Math.random() * 10) * this.VISIBLE_SYMBOLS;
+      const finalIndex = stopIndex + extraSpins;
+      const finalY = -finalIndex * this.SYMBOL_HEIGHT;
 
-    gsap.to(reelEl, {
-      y: finalY,
-      duration: 2.5 + index * 0.3,
-      ease: 'power2.out',
-      onComplete: () => {
-        gsap.set(reelEl, { y: -stopIndex * this.SYMBOL_HEIGHT });
+      gsap.to(reelEl, {
+        y: finalY,
+        duration: 2.5 + index * 0.3,
+        ease: 'power2.out',
+        onComplete: () => {
+          gsap.set(reelEl, { y: -stopIndex * this.SYMBOL_HEIGHT });
 
-        this.reels[index] = [
-          ...this.reels[index].slice(stopIndex, stopIndex + this.VISIBLE_SYMBOLS),
-          ...this.reels[index].filter(
-            (_, i) => i < stopIndex || i >= stopIndex + this.VISIBLE_SYMBOLS
-          ),
-        ];
+          this.reels[index] = [
+            ...this.reels[index].slice(stopIndex, stopIndex + this.VISIBLE_SYMBOLS),
+            ...this.reels[index].filter(
+              (_, i) => i < stopIndex || i >= stopIndex + this.VISIBLE_SYMBOLS
+            ),
+          ];
 
-        // обновляем wild-прогресс
-        this.reels[index]
-          .slice(0, this.VISIBLE_SYMBOLS)
-          .forEach(s => this.updateWildProgress(s.id));
+          // обновляем wild-прогресс
+          this.reels[index]
+            .slice(0, this.VISIBLE_SYMBOLS)
+            .forEach(s => this.updateWildProgress(s.id));
 
-        finished++;
-        if (finished === reelElements.length) {
-          this.isSpinning = false;
+          finished++;
+          if (finished === reelElements.length) {
+            this.isSpinning = false;
 
-          // можно считать выигрыш
-          this.onSpinFinished(spinResultIds);
-        }
-      },
+            // можно считать выигрыш
+            this.onSpinFinished(spinResultIds);
+          }
+        },
+      });
     });
-  });
-}
+  }
 
 
   private prepareReelStop(
