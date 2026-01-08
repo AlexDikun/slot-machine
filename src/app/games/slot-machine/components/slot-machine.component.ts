@@ -101,7 +101,7 @@ export class SlotMachineComponent implements AfterViewInit {
           // обновляем wild-прогресс
           this.reels[index]
             .slice(0, this.VISIBLE_SYMBOLS)
-            .forEach(s => this.updateWildProgress(s.id));
+            .forEach(s => this.updateWildProgress(s));
 
           finished++;
           if (finished === reelElements.length) {
@@ -176,13 +176,21 @@ export class SlotMachineComponent implements AfterViewInit {
     }
   }
 
-  // ===== WILD PROGRESS =====
-  updateWildProgress(symbolId: string) {
-    if (symbolId === 'wild1') {
-      this.goldWildProgress = Math.min(this.goldWildProgress + 20, 100);
+  updateWildProgress(symbol: SymbolConfig) {
+    if (symbol.type !== 'wild' || !symbol.wildProgress) return;
+
+    if (symbol.type === 'wild') {
+      this.goldWildProgress = Math.min(
+        this.goldWildProgress + symbol.wildProgress,
+        100
+      );
     }
-    if (symbolId === 'wild2') {
-      this.silverWildProgress = Math.min(this.silverWildProgress + 20, 100);
-    }
-  }
+
+    if (symbol.type === 'wild') {
+      this.silverWildProgress = Math.min(
+        this.silverWildProgress + symbol.wildProgress,
+        100
+      );
+   }
+ }
 }

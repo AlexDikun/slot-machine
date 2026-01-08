@@ -8,6 +8,7 @@ export interface SymbolConfig {
   icon: string;
   type: SymbolType;
   weight?: number;
+  wildProgress?: number;
   multipliers?: {         
     3?: number;           
     4?: number;          
@@ -95,6 +96,7 @@ export const SYMBOLS_CONFIG: SymbolConfig[] = [
     icon: 'assets/symbols/wildGoldenHorseshoe-icon.jpg',
     type: 'wild',
     weight: 2,
+    wildProgress: 20,
   },
   {
     id: 'wild2',
@@ -102,6 +104,7 @@ export const SYMBOLS_CONFIG: SymbolConfig[] = [
     icon: 'assets/symbols/wildSilverHorseshoe-icon.jpg',
     type: 'wild',
     weight: 3,
+    wildProgress: 20,
   },
 ];
 
