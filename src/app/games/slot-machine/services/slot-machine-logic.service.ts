@@ -9,21 +9,17 @@ import { SymbolConfig } from '../config/symbols.config';
 export class SlotMachineLogicService {
   constructor() {}
 
-  // Генерация случайных символов на барабанах
   generateReels(): string[][] {
-    // Заполняем барабаны случайными символами
     return Array.from({ length: 5 }, () => 
       Array.from({ length: 3 }, () => this.getRandomSymbol())
     );
   }
 
-  // Получить случайный символ на основе SYMBOLS_CONFIG
   private getRandomSymbol(): string {
     const symbol = SYMBOLS_CONFIG[Math.floor(Math.random() * SYMBOLS_CONFIG.length)];
     return symbol.id;
   }
 
-  // Проверка выигрыша на основе выпавших символов
   calculateWin(reels: string[][], bet: number): number {
     let win = 0;
     
@@ -33,10 +29,9 @@ export class SlotMachineLogicService {
 
       // Если все символы на барабанах совпадают
       if (column.every(s => s === symbol)) {
-        // Получаем данные для этого символа
         const symbolConfig = SYMBOLS_CONFIG.find(s => s.id === symbol);
         if (symbolConfig) {
-          const multiplier = symbolConfig?.multipliers?.[3] || 1; // Для примера: ставка на 3 символа
+          const multiplier = symbolConfig?.multipliers?.[3] || 1; 
           win += bet * multiplier;
         }
       }
@@ -45,11 +40,8 @@ export class SlotMachineLogicService {
     return win;
   }
 
-  // Вычисление выигрыша с учетом wild
   calculateWithWilds(reels: string[][], bet: number): number {
     let win = 0;
-    // Дополнительная логика для wild символов
-    // Например, если символ Wild заменяет другой символ, увеличиваем выигрыш
     return win;
   }
 }
