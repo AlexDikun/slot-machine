@@ -27,7 +27,7 @@ export class SlotMachineLogicService {
       const symbol = column[0];
       const count = column.length as 3 | 4 | 5;
       if (column.every(s => s.id === symbol.id)) {
-        const multiplier = symbol.multipliers?.[count] ?? 1;
+        const multiplier = symbol.multipliers?.[count] ?? 0;
         win += bet * multiplier;
       }
     }
