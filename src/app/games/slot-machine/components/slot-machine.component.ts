@@ -13,7 +13,7 @@ import { SymbolConfig } from '../config/symbols.config';
   styleUrls: ['./slot-machine.component.scss'],
 })
 export class SlotMachineComponent {
-  @ViewChildren('reel') reelsElements!: QueryList<ElementRef<HTMLDivElement>>;
+  @ViewChildren('reelInner') reelsElements!: QueryList<ElementRef<HTMLDivElement>>;
 
   reels: SymbolConfig[][] = [];
   showBetOptions = false;
@@ -36,10 +36,10 @@ export class SlotMachineComponent {
     const { reels, onFinish } = this.engine.spin();
     this.reels = reels;
 
-    this.reelsElements.forEach((reelEl, index) => {
+    this.reelsElements.forEach((reelInnerEl, index) => {
       const finalIndex = reels[index].length - 1;
       this.animation.spinReel(
-        reelEl.nativeElement,
+        reelInnerEl.nativeElement,
         finalIndex,
         SLOT_MACHINE_CONFIG.SYMBOL_HEIGHT,
         SLOT_MACHINE_CONFIG.SPIN_BASE_DURATION,

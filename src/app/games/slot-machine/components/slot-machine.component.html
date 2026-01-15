@@ -20,8 +20,8 @@
     <!-- Барабаны -->
     <div class="slot-machine__game-area">
       <div class="slot-machine__reels">
-        <div class="slot-machine__reel" *ngFor="let reel of reels" #reel>
-          <div class="slot-machine__reel-inner">
+        <div class="slot-machine__reel" *ngFor="let reel of reels">
+          <div class="slot-machine__reel-inner" #reelInner>
             <div class="slot-machine__symbol" *ngFor="let symbol of reel">
               <img [src]="symbol.icon" class="slot-machine__icon" />
             </div>
