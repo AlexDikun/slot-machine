@@ -21,13 +21,22 @@ export class SlotMachineEngineService {
     return {
       reels,
       onFinish: () => {
+        const finalSymbols = reels.map(r =>
+          r.symbols.slice(r.stopIndex)
+        );
+        
         const win = this.logic.calculateWin(
-          reels,                               
+          finalSymbols,                               
           this.state.currentBet$.value         
         );
+
         this.state.setSpinning(false);         // спин завершен  
         return win;
       },
     };
+  }
+
+  initReels() {
+    return this.logic.generateInitialReels();
   }
 }

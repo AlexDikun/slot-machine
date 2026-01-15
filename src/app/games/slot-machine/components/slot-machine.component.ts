@@ -4,7 +4,7 @@ import { SlotMachineEngineService } from '../services/slot-machine-engine.servic
 import { SlotMachineStateService } from '../services/slot-machine-state.service';
 import { ReelAnimationService } from '../services/reel-animation.service';
 import { SLOT_MACHINE_CONFIG } from '../config/slot-machine.config';
-import { SymbolConfig } from '../config/symbols.config';
+import { ReelViewModel } from '../models/reel-view.model';
 
 @Component({
   selector: 'app-slot-machine',
@@ -15,14 +15,14 @@ import { SymbolConfig } from '../config/symbols.config';
 export class SlotMachineComponent {
   @ViewChildren('reelInner') reelsElements!: QueryList<ElementRef<HTMLDivElement>>;
 
-  reels: SymbolConfig[][] = [];
+  reels: ReelViewModel[] = [];
   showBetOptions = false;
   bets = [10, 50, 100, 500];
 
   constructor(
     private engine: SlotMachineEngineService,
     private state: SlotMachineStateService,
-    private animation: ReelAnimationService
+    private animation: ReelAnimationService,
   ) {}
 
   get isSpinning$() { return this.state.isSpinning$; }
@@ -30,21 +30,34 @@ export class SlotMachineComponent {
   get goldProgress$() { return this.state.goldWildProgress$; }
   get silverProgress$() { return this.state.silverWildProgress$; }
 
+  ngOnInit() {
+    this.reels = this.engine.initReels();
+  }
+
   startSpin() {
     if (this.state.isSpinning$.value) return;
 
     const { reels, onFinish } = this.engine.spin();
     this.reels = reels;
 
-    this.reelsElements.forEach((reelInnerEl, index) => {
-      const finalIndex = reels[index].length - 1;
-      this.animation.spinReel(
-        reelInnerEl.nativeElement,
-        finalIndex,
-        SLOT_MACHINE_CONFIG.SYMBOL_HEIGHT,
-        SLOT_MACHINE_CONFIG.SPIN_BASE_DURATION,
-        () => {}
-      );
+    setTimeout(() => {
+      this.reelsElements.forEach((reelInnerEl, index) => {
+        const reel = reels[index];
+
+        this.animation.resetPosition(
+          reelInnerEl.nativeElement,
+          0,
+          SLOT_MACHINE_CONFIG.SYMBOL_HEIGHT
+        );
+
+        this.animation.spinReel(
+          reelInnerEl.nativeElement,
+          reel.stopIndex,
+          SLOT_MACHINE_CONFIG.SYMBOL_HEIGHT,
+          SLOT_MACHINE_CONFIG.SPIN_BASE_DURATION,
+          () => {}
+        );
+      });
     });
 
     const win = onFinish();
