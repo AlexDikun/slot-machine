@@ -6,6 +6,7 @@ import { ReelAnimationService } from '../services/reel-animation.service';
 import { SLOT_MACHINE_CONFIG } from '../config/slot-machine.config';
 import { ReelViewModel } from '../models/reel-view.model';
 import { SLOT_MACHINE_BETS } from '../config';
+import { ScatterProgressService } from '../services';
 
 @Component({
   selector: 'app-slot-machine',
@@ -24,12 +25,13 @@ export class SlotMachineComponent {
     private engine: SlotMachineEngineService,
     private state: SlotMachineStateService,
     private animation: ReelAnimationService,
+    private scatterProgress: ScatterProgressService,
   ) {}
 
   get isSpinning$() { return this.state.isSpinning$; }
   get currentBet$() { return this.state.currentBet$; }
-  get goldProgress$() { return this.state.goldScatterProgress$; }
-  get silverProgress$() { return this.state.silverScatterProgress$; }
+  get goldProgress$() { return this.scatterProgress.goldProgress$; }
+  get silverProgress$() { return this.scatterProgress.silverProgress$; }
 
   ngOnInit() {
     this.reels = this.engine.initReels();

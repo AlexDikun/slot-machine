@@ -3,6 +3,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { SymbolConfig } from '../config';
+import { ScatterProgressService } from './scatter-progress.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,13 +15,15 @@ export class SlotMachineStateService {
   readonly goldScatterProgress$ = new BehaviorSubject(0);
   readonly silverScatterProgress$ = new BehaviorSubject(0);
 
+  constructor(private scatterProgress: ScatterProgressService) {}
+
   setSpinning(v: boolean) {
     this.isSpinning$.next(v);
   }
 
   setBet(bet: number) {
     this.currentBet$.next(bet);
-    this.resetScatterrogress();
+    this.scatterProgress.reset();
   }
 
   addScatterProgress(symbol: SymbolConfig) {
