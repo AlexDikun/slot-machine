@@ -69,8 +69,13 @@ export class SlotMachineComponent {
     this.showBetOptions = false;
   }
 
-  onBetHover(show: boolean) {
-    this.showBetOptions = show;
+  closeBetOptions() {
+    this.showBetOptions = false;
   }
+
+  onBetClick(event: MouseEvent) {
+    event.stopPropagation();
+    this.showBetOptions = !this.showBetOptions;
+} 
 }
 

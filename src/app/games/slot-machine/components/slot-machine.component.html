@@ -46,11 +46,14 @@
     <div class="slot-machine__bet">
       <div class="bet-label">Ставка</div>
       <div class="bet-current"
-           (click)="onBetHover(!showBetOptions)"
+           (click)="onBetClick($event)"
            [class.disabled]="(isSpinning$ | async)!">
         {{ (currentBet$ | async)! }}
       </div>
-      <div class="bet-options" *ngIf="showBetOptions">
+      <div class="bet-options" 
+           *ngIf="showBetOptions"
+           appClickOutside
+           (clickOutside)="closeBetOptions()">
         <div class="bet-option" *ngFor="let bet of bets"
              (click)="selectBet(bet)"
              [class.active]="bet === (currentBet$ | async)!">
