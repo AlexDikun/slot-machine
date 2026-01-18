@@ -37,8 +37,11 @@ export class SlotMachineComponent {
   startSpin() {
     if (this.state.isSpinning$.value) return;
 
-    const { reels, onFinish } = this.engine.spin();
+    const { reels, Finish } = this.engine.spin();
     this.reels = reels;
+
+    let completed = 0;
+    const total = reels.length;
 
     setTimeout(() => {
       this.reelsElements.forEach((reelInnerEl, index) => {
@@ -55,13 +58,16 @@ export class SlotMachineComponent {
           reel.stopIndex,
           SLOT_MACHINE_CONFIG.SYMBOL_HEIGHT,
           SLOT_MACHINE_CONFIG.SPIN_BASE_DURATION,
-          () => {}
+          () => {
+            completed++;
+            if (completed == total) {
+              const win = Finish();
+              console.log('Spin finished, win =', win);
+            }
+          }
         );
       });
     });
-
-    const win = onFinish();
-    console.log('Spin finished, win =', win);
   }
 
   selectBet(bet: number) {

@@ -20,7 +20,7 @@ export class SlotMachineEngineService {
 
     return {
       reels,
-      onFinish: () => {
+      Finish: () => {
         const finalSymbols = reels.map(r =>
           r.symbols.slice(r.stopIndex)
         );
