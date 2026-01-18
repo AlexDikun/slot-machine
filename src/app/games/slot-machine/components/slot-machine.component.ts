@@ -71,6 +71,8 @@ export class SlotMachineComponent {
   }
 
   selectBet(bet: number) {
+    if(this.state.isSpinning$.value) return;
+    
     this.state.setBet(bet);
     this.showBetOptions = false;
   }
@@ -80,6 +82,8 @@ export class SlotMachineComponent {
   }
 
   onBetClick(event: MouseEvent) {
+    if(this.state.isSpinning$.value) return;
+
     event.stopPropagation();
     this.showBetOptions = !this.showBetOptions;
 } 
