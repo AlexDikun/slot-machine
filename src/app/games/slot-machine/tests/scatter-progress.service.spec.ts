@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { ScatterProgressService } from './scatter-progress.service';
+import { ScatterProgressService } from '../services/scatter-progress.service';
 
 describe('ScatterProgressService', () => {
   let service: ScatterProgressService;

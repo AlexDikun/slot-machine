@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { ReelFactoryService } from './reel-factory.service';
+import { ReelFactoryService } from '../services/reel-factory.service';
 
 describe('ReelFactoryService', () => {
   let service: ReelFactoryService;

@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { SlotMachineEngineService } from './slot-machine-engine.service';
+import { SlotMachineEngineService } from '../services/slot-machine-engine.service';
 
 describe('SlotMachineEngineService', () => {
   let service: SlotMachineEngineService;
