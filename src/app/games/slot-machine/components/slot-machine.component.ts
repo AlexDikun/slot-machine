@@ -72,7 +72,7 @@ export class SlotMachineComponent {
 
   selectBet(bet: number) {
     if(this.state.isSpinning$.value) return;
-    
+
     this.state.setBet(bet);
     this.showBetOptions = false;
   }
@@ -86,6 +86,6 @@ export class SlotMachineComponent {
 
     event.stopPropagation();
     this.showBetOptions = !this.showBetOptions;
-} 
+  } 
 }
 
