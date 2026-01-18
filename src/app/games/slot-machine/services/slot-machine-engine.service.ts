@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import { SlotMachineLogicService } from './slot-machine-logic.service';
 import { SlotMachineStateService } from './slot-machine-state.service';
 import { ReelFactoryService } from './reel-factory.service';
+import { ScatterProgressService } from './scatter-progress.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,8 @@ export class SlotMachineEngineService {
   constructor(
     private logic: SlotMachineLogicService,
     private state: SlotMachineStateService,
-    private reelFactory: ReelFactoryService
+    private reelFactory: ReelFactoryService,
+    private scatterProgress: ScatterProgressService
   ) {}
 
   spin() {
@@ -26,6 +28,12 @@ export class SlotMachineEngineService {
         const finalSymbols = reels.map(r =>
           r.symbols.slice(r.stopIndex)
         );
+
+        finalSymbols.forEach(column => {
+          column.forEach(symbol => {
+            this.scatterProgress.add(symbol);
+          });
+        });
         
         const win = this.logic.calculateWin(
           finalSymbols,                               
