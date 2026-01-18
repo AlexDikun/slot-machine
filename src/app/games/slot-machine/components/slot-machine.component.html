@@ -6,13 +6,13 @@
     <div class="jackpot-value">1 250 000</div>
   </div>
 
-  <div class="slot-machine__game-area-with-wilds">
+  <div class="slot-machine__game-area-with-scatters">
     <!-- Левая подкова -->
-    <div class="wild-progress__item wild-progress__gold">
-      <img src="assets/symbols/wildGoldenHorseshoe-icon.jpg"
+    <div class="scatter-progress__item scatter-progress__gold">
+      <img src="assets/symbols/goldenHorseshoe-icon.jpg"
            [class.active]="(goldProgress$ | async)! > 0" />
-      <div class="wild-progress__bar">
-        <div class="wild-progress__bar-fill"
+      <div class="scatter-progress__bar">
+        <div class="scatter-progress__bar-fill"
              [style.width.%]="(goldProgress$ | async)!"></div>
       </div>
     </div>
@@ -31,11 +31,11 @@
     </div>
 
     <!-- Правая подкова -->
-    <div class="wild-progress__item wild-progress__silver">
-      <img src="assets/symbols/wildSilverHorseshoe-icon.jpg"
+    <div class="scatter-progress__item scatter-progress__silver">
+      <img src="assets/symbols/silverHorseshoe-icon.jpg"
            [class.active]="(silverProgress$ | async)! > 0" />
-      <div class="wild-progress__bar">
-        <div class="wild-progress__bar-fill"
+      <div class="scatter-progress__bar">
+        <div class="scatter-progress__bar-fill"
              [style.width.%]="(silverProgress$ | async)!"></div>
       </div>
     </div>

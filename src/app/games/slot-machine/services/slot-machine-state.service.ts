@@ -11,8 +11,8 @@ export class SlotMachineStateService {
   readonly isSpinning$ = new BehaviorSubject(false); 
   readonly currentBet$ = new BehaviorSubject(50);
 
-  readonly goldWildProgress$ = new BehaviorSubject(0);
-  readonly silverWildProgress$ = new BehaviorSubject(0);
+  readonly goldScatterProgress$ = new BehaviorSubject(0);
+  readonly silverScatterProgress$ = new BehaviorSubject(0);
 
   setSpinning(v: boolean) {
     this.isSpinning$.next(v);
@@ -20,24 +20,26 @@ export class SlotMachineStateService {
 
   setBet(bet: number) {
     this.currentBet$.next(bet);
+    this.resetScatterrogress();
   }
 
-  addWildProgress(symbol: SymbolConfig) {
-    if (symbol.type !== 'wild' || !symbol.wildProgress) return;
+  addScatterProgress(symbol: SymbolConfig) {
+    if (symbol.type !== 'scatter' || !symbol.scatterProgress) return;
 
-    if (symbol.id === 'wild1') {}
-    this.goldWildProgress$.next(
-      Math.min(this.goldWildProgress$.value + symbol.wildProgress, 100)
+    if (symbol.id === 'scatter1') {}
+    this.goldScatterProgress$.next(
+      Math.min(this.goldScatterProgress$.value + symbol.scatterProgress, 70)
     );
 
-    if (symbol.id === 'wild2') {}
-    this.silverWildProgress$.next(
-      Math.min(this.silverWildProgress$.value + symbol.wildProgress, 100)
+    if (symbol.id === 'scatter2') {}
+    this.silverScatterProgress$.next(
+      Math.min(this.silverScatterProgress$.value + symbol.scatterProgress, 70)
     );
   }
 
-  resetWildProgress() {
-    this.goldWildProgress$.next(0);
-    this.silverWildProgress$.next(0);
+  resetScatterrogress() {
+    this.goldScatterProgress$.next(0);
+    this.silverScatterProgress$.next(0);
   }
+
 }

@@ -1,6 +1,6 @@
 // src/app/games/slot-machine/config/symbols.config.ts
 
-export type SymbolType = 'regular' | 'wild';
+export type SymbolType = 'regular' | 'wild' | 'scatter';
 
 export interface SymbolConfig {
   id: string;
@@ -8,7 +8,7 @@ export interface SymbolConfig {
   icon: string;
   type: SymbolType;
   weight?: number;
-  wildProgress?: number;
+  scatterProgress?: number;
   multipliers?: {         
     3?: number;           
     4?: number;          
@@ -80,31 +80,33 @@ export const SYMBOLS_CONFIG: SymbolConfig[] = [
     weight: 5,
     multipliers: { 3: 3, 4: 10, 5: 75 }
   },
+
+  // ===== WILD =====
   {
     id: 'ace',
     name: 'Gorynych',
     icon: 'assets/symbols/ace-icon.jpg',
-    type: 'regular',
+    type: 'wild',
     weight: 3,
     multipliers: { 3: 5, 4: 15, 5: 100 }
   },
 
-  // ===== WILDS =====
+  // ===== SCATTERS =====
   {
-    id: 'wild1',
+    id: 'scatter1',
     name: 'Golden Horseshoe',
-    icon: 'assets/symbols/wildGoldenHorseshoe-icon.jpg',
+    icon: 'assets/symbols/goldenHorseshoe-icon.jpg',
     type: 'wild',
     weight: 2,
-    wildProgress: 20,
+    scatterProgress: 10,
   },
   {
-    id: 'wild2',
+    id: 'scatter2',
     name: 'Silver Horseshoe',
-    icon: 'assets/symbols/wildSilverHorseshoe-icon.jpg',
+    icon: 'assets/symbols/silverHorseshoe-icon.jpg',
     type: 'wild',
     weight: 3,
-    wildProgress: 20,
+    scatterProgress: 10,
   },
 ];
 

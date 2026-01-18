@@ -28,8 +28,8 @@ export class SlotMachineComponent {
 
   get isSpinning$() { return this.state.isSpinning$; }
   get currentBet$() { return this.state.currentBet$; }
-  get goldProgress$() { return this.state.goldWildProgress$; }
-  get silverProgress$() { return this.state.silverWildProgress$; }
+  get goldProgress$() { return this.state.goldScatterProgress$; }
+  get silverProgress$() { return this.state.silverScatterProgress$; }
 
   ngOnInit() {
     this.reels = this.engine.initReels();

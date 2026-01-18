@@ -31,14 +31,14 @@
 }
 
 /* ИГРОВАЯ ЗОНА с подковами*/
-.slot-machine__game-area-with-wilds {
+.slot-machine__game-area-with-scatters {
   display: flex;
   align-items: center;
   gap: 12px;
 }
 
 /* Подковы */
-.wild-progress__item img {
+.scatter-progress__item img {
   width: 28px;
   height: 28px;
   object-fit: contain;
@@ -52,7 +52,7 @@
   }
 }
 
-.wild-progress__bar {
+.scatter-progress__bar {
   width: 40px;
   height: 6px;
   background: #e0e0e0;
