@@ -26,23 +26,4 @@ export class SlotMachineStateService {
     this.scatterProgress.reset();
   }
 
-  addScatterProgress(symbol: SymbolConfig) {
-    if (symbol.type !== 'scatter' || !symbol.scatterProgress) return;
-
-    if (symbol.id === 'scatter1') {}
-    this.goldScatterProgress$.next(
-      Math.min(this.goldScatterProgress$.value + symbol.scatterProgress, 70)
-    );
-
-    if (symbol.id === 'scatter2') {}
-    this.silverScatterProgress$.next(
-      Math.min(this.silverScatterProgress$.value + symbol.scatterProgress, 70)
-    );
-  }
-
-  resetScatterrogress() {
-    this.goldScatterProgress$.next(0);
-    this.silverScatterProgress$.next(0);
-  }
-
 }
