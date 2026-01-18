@@ -5,6 +5,7 @@ import { SlotMachineStateService } from '../services/slot-machine-state.service'
 import { ReelAnimationService } from '../services/reel-animation.service';
 import { SLOT_MACHINE_CONFIG } from '../config/slot-machine.config';
 import { ReelViewModel } from '../models/reel-view.model';
+import { SLOT_MACHINE_BETS } from '../config';
 
 @Component({
   selector: 'app-slot-machine',
@@ -17,7 +18,7 @@ export class SlotMachineComponent {
 
   reels: ReelViewModel[] = [];
   showBetOptions = false;
-  bets = [10, 50, 100, 500];
+  bets = SLOT_MACHINE_BETS;
 
   constructor(
     private engine: SlotMachineEngineService,
