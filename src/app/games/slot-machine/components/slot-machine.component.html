@@ -1,0 +1,71 @@
+<div class="slot-machine">
+
+  <!-- Джекпот -->
+  <div class="slot-machine__jackpot">
+    <div class="jackpot-label">JACKPOT</div>
+    <div class="jackpot-value">1 250 000</div>
+  </div>
+
+  <div class="slot-machine__game-area-with-scatters">
+    <!-- Левая подкова -->
+    <div class="scatter-progress__item scatter-progress__gold">
+      <img src="assets/symbols/goldenHorseshoe-icon.jpg"
+           [class.active]="(goldProgress$ | async)! > 0" />
+      <div class="scatter-progress__bar">
+        <div class="scatter-progress__bar-fill"
+             [style.width.%]="(goldProgress$ | async)!"></div>
+      </div>
+    </div>
+
+    <!-- Барабаны -->
+    <div class="slot-machine__game-area">
+      <div class="slot-machine__reels">
+        <div class="slot-machine__reel" *ngFor="let reel of reels">
+          <div class="slot-machine__reel-inner" #reelInner>
+            <div class="slot-machine__symbol" *ngFor="let symbol of reel.symbols">
+              <img [src]="symbol.icon" class="slot-machine__icon" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Правая подкова -->
+    <div class="scatter-progress__item scatter-progress__silver">
+      <img src="assets/symbols/silverHorseshoe-icon.jpg"
+           [class.active]="(silverProgress$ | async)! > 0" />
+      <div class="scatter-progress__bar">
+        <div class="scatter-progress__bar-fill"
+             [style.width.%]="(silverProgress$ | async)!"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Нижняя панель -->
+  <div class="slot-machine__bottom-panel">
+    <div class="slot-machine__bet">
+      <div class="bet-label">Ставка</div>
+      <div class="bet-current"
+           (click)="onBetClick($event)"
+           [class.disabled]="(isSpinning$ | async)!">
+        {{ (currentBet$ | async)! }}
+      </div>
+      <div class="bet-options" 
+           *ngIf="showBetOptions"
+           appClickOutside
+           (clickOutside)="closeBetOptions()">
+        <div class="bet-option" *ngFor="let bet of bets"
+             (click)="selectBet(bet)"
+             [class.active]="bet === (currentBet$ | async)!">
+          {{ bet }}
+        </div>
+      </div>
+    </div>
+
+    <button class="slot-machine__spin-button"
+            (click)="startSpin()"
+            [disabled]="(isSpinning$ | async)!">
+      <img src="assets/symbols/spin-button-icon.png" alt="Spin" class="slot-machine__spin-icon" />
+    </button>
+  </div>
+</div>

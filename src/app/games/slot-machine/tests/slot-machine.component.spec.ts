@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SlotMachineComponent } from './slot-machine.component';
+import { SlotMachineComponent } from '../components/slot-machine.component';
 
 describe('SlotMachineComponent', () => {
   let component: SlotMachineComponent;
